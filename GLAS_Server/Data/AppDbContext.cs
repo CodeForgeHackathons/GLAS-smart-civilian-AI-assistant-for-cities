@@ -10,6 +10,6 @@ namespace GLAS_Server.Data
 
         public DbSet<User> Users => Set<User>();
         public DbSet<Notification> Notifications => Set<Notification>();
-        public DbSet<NotificationSettings> NotificationSettings => Set<NotificationSettings>();
+        public DbSet<NotificationSettings> NotificationsSettings => Set<NotificationSettings>();
     }
 }

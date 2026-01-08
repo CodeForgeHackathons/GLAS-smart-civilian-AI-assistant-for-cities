@@ -19,10 +19,10 @@ namespace GLAS_Server.Controllers
 
         // api/user/profile/{username}
 
-        [HttpGet("profile/{username}")]
-        public async Task<IActionResult> GetProfile(string username)
+        [HttpGet("profile/{id}")]
+        public async Task<IActionResult> GetProfile(uint id)
         {
-            var profile = await _userService.GetProfileAsync(username);
+            var profile = await _userService.GetProfileAsync(id);
 
             if (profile == null) return NotFound("User not found");
 
@@ -56,6 +56,8 @@ namespace GLAS_Server.Controllers
 
 
         }
+        //[HttpPost("update")]
+        //public async Task<IActionResult> UpdateUserData()
     }
 
 

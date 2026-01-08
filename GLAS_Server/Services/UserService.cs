@@ -3,7 +3,6 @@ using GLAS_Server.Data;
 using GLAS_Server.DTO;
 using Microsoft.EntityFrameworkCore;
 using GLAS_Server.Models;
-
 namespace GLAS_Server.Services
 {
 
@@ -18,16 +17,17 @@ namespace GLAS_Server.Services
 
         }
 
-        public async Task<UserProfileDto?> GetProfileAsync(string username)
+        public async Task<UserProfile?> GetProfileAsync(uint id)
         {
 
-            var user = await _db.Users.FirstOrDefaultAsync(u => u.Username == username);
+            var user = await _db.Users.FirstOrDefaultAsync(user => user.Id == id);
             if (user == null)
                 return null;
 
-            var profileData = new UserProfileDto
+            var profileData = new UserProfile
             {
-                Username = user.Username,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
                 BirthDate = user.BirthDate,
             };
             return profileData;
@@ -41,14 +41,14 @@ namespace GLAS_Server.Services
         public async Task<(bool Success, string Message)> RegisterAsync(DTO.RegisterRequest request)
         {
 
-            if (string.IsNullOrWhiteSpace(request.Username) || string.IsNullOrWhiteSpace(request.Password) || string.IsNullOrWhiteSpace(request.BirthDate))
+            if (string.IsNullOrWhiteSpace(request.FirstName) || string.IsNullOrWhiteSpace(request.LastName) || string.IsNullOrWhiteSpace(request.Password) || string.IsNullOrWhiteSpace(request.BirthDate))
                 return (false, "Enter all lines");
 
-            var exists = await _db.Users.AnyAsync(user => user.Username == request.Username);
+            var exists = await _db.Users.AnyAsync(user => user.Id == request.Id);
             if (exists)
                 return (false, "User already exists");
 
-            var user = new User { Username = request.Username, Password = request.Password, BirthDate = request.BirthDate };
+            var user = new User { FirstName = request.FirstName, LastName = request.LastName, Password = request.Password, BirthDate = request.BirthDate };
             _db.Users.Add(user);
             await _db.SaveChangesAsync();
             return (Success: true, Message: "User registered!");
@@ -59,21 +59,21 @@ namespace GLAS_Server.Services
         public async Task<(bool Success, string Message)> LoginAsync(DTO.LoginRequest request)
         {
 
-            if (string.IsNullOrWhiteSpace(request.Username) || string.IsNullOrWhiteSpace(request.Password))
+            if (string.IsNullOrWhiteSpace(request.FirstName) || string.IsNullOrWhiteSpace(request.LastName) || string.IsNullOrWhiteSpace(request.Password))
                 return (false, "Enter all lines");
 
 
-            var exists = await _db.Users.AnyAsync(user => user.Username == request.Username && user.Password == request.Password);
+            var exists = await _db.Users.AnyAsync(user => user.FirstName == request.FirstName && user.LastName == request.LastName && user.Password == request.Password);
             if (!exists)
                 return (false, "Incorrect username or password");
 
             return (true, "User logged in!");
 
         }
-        public async Task<(bool, string)> UpdateProfileAsync(DTO.UserProfileDto request)
+        public async Task<(bool, string)> UpdateProfileAsync(DTO.UserProfile request)
         {
 
-            var user = await _db.Users.FirstOrDefaultAsync(u => u.Username == request.Username);
+            var user = await _db.Users.FirstOrDefaultAsync(user => user.Id == request.Id);
             if (user == null)
                 return (true, "User not found");
 

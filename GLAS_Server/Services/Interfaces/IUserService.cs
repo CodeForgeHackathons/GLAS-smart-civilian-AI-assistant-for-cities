@@ -1,5 +1,4 @@
 
-using System.Collections.Generic;
 using GLAS_Server.DTO;
 
 namespace GLAS_Server.Services.Interfaces
@@ -13,10 +12,10 @@ namespace GLAS_Server.Services.Interfaces
         Task<(bool Success, string Message)> LoginAsync(LoginRequest request);
 
 
-        Task<UserProfileDto?> GetProfileAsync(string username);
+        Task<UserProfile?> GetProfileAsync(uint id);
 
 
-        Task<(bool Success, string Message)> UpdateProfileAsync(UserProfileDto request);
+        Task<(bool Success, string Message)> UpdateProfileAsync(UserProfile request);
 
 
         //       Task<bool> DeleteUserAsync(int userId);
