@@ -1,4 +1,3 @@
-using System;
 using GLAS_Server.Services.Interfaces;
 using GLAS_Server.Data;
 using GLAS_Server.DTO;
@@ -30,11 +29,6 @@ namespace GLAS_Server.Services
             {
                 Username = user.Username,
                 BirthDate = user.BirthDate,
-                Weight = user.Weight,
-                Height = user.Height,
-                Goal = user.Goal,
-                TargetWeight = user.TargetWeight,
-                TargetPeriod = user.TargetPeriod
             };
             return profileData;
 
@@ -83,12 +77,7 @@ namespace GLAS_Server.Services
             if (user == null)
                 return (true, "User not found");
 
-            user.Goal = string.IsNullOrEmpty(request.Goal) ? "Похудение" : request.Goal;
             user.BirthDate = request.BirthDate;
-            user.Weight = request.Weight;
-            user.Height = request.Height;
-            user.TargetWeight = request.TargetWeight;
-            user.TargetPeriod = request.TargetPeriod;
 
             await _db.SaveChangesAsync();
             return (true, "Profile updated!");

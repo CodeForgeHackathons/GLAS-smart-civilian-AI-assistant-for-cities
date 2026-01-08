@@ -6,9 +6,7 @@ namespace GLAS_Server.Models
     {
         public int Id { get; set; }
         public int UserId { get; set; }
-        public bool MotivationalEnabled { get; set; } = true;
         public bool AchievementsEnabled { get; set; } = true;
-        public bool ProgressEnabled { get; set; } = true;
         public bool GeneralEnabled { get; set; } = true;
         public bool SoundEnabled { get; set; } = true;
         public bool VibrationEnabled { get; set; } = true;
