@@ -1,5 +1,3 @@
-using System;
-
 namespace GLAS_Server.Models
 {
     public class Notification

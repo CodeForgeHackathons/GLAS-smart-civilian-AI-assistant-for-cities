@@ -1,9 +1,6 @@
-using Microsoft.EntityFrameworkCore;
-using System.Text.Json.Serialization;
 using GLAS_Server.Data;
 using GLAS_Server.Services;
 using GLAS_Server.Services.Interfaces;
-
 var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 {
     Args = args,

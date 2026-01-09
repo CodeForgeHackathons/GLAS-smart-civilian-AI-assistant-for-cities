@@ -1,26 +1,26 @@
 {
   "format": 1,
   "restore": {
-    "/Users/temamodder/Projects/GLAS-smart-civilian-AI-assistant-for-cities/GLAS_Server/GLAS_Server.csproj": {}
+    "/home/modderpath/Projects/GLAS-smart-civilian-AI-assistant-for-cities/GLAS_Server/GLAS_Server.csproj": {}
   },
   "projects": {
-    "/Users/temamodder/Projects/GLAS-smart-civilian-AI-assistant-for-cities/GLAS_Server/GLAS_Server.csproj": {
+    "/home/modderpath/Projects/GLAS-smart-civilian-AI-assistant-for-cities/GLAS_Server/GLAS_Server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/temamodder/Projects/GLAS-smart-civilian-AI-assistant-for-cities/GLAS_Server/GLAS_Server.csproj",
+        "projectUniqueName": "/home/modderpath/Projects/GLAS-smart-civilian-AI-assistant-for-cities/GLAS_Server/GLAS_Server.csproj",
         "projectName": "GLAS_Server",
-        "projectPath": "/Users/temamodder/Projects/GLAS-smart-civilian-AI-assistant-for-cities/GLAS_Server/GLAS_Server.csproj",
-        "packagesPath": "/Users/temamodder/.nuget/packages/",
-        "outputPath": "/Users/temamodder/Projects/GLAS-smart-civilian-AI-assistant-for-cities/GLAS_Server/obj/",
+        "projectPath": "/home/modderpath/Projects/GLAS-smart-civilian-AI-assistant-for-cities/GLAS_Server/GLAS_Server.csproj",
+        "packagesPath": "/home/modderpath/.nuget/packages/",
+        "outputPath": "/home/modderpath/Projects/GLAS-smart-civilian-AI-assistant-for-cities/GLAS_Server/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/temamodder/.nuget/NuGet/NuGet.Config"
+          "/home/modderpath/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
-          "/usr/local/share/dotnet/library-packs": {},
+          "/usr/lib64/dotnet/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -39,11 +39,25 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.300"
+        "SdkAnalysisLevel": "9.0.100"
       },
       "frameworks": {
         "net9.0": {
           "targetAlias": "net9.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[9.0.11, )"
+            },
+            "Npgsql.EntityFrameworkCore.PostgreSQL": {
+              "target": "Package",
+              "version": "[9.0.0, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.4.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -63,7 +77,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.301/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/lib64/dotnet/sdk/9.0.112/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

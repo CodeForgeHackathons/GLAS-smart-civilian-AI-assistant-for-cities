@@ -31,20 +31,16 @@ namespace GLAS_Server.Services
                 BirthDate = user.BirthDate,
             };
             return profileData;
-
-
-
         }
-
         //   public async Task<bool?> DeleteUserAsync(int userid) => false; //soon
 
         public async Task<(bool Success, string Message)> RegisterAsync(DTO.RegisterRequest request)
         {
 
-            if (string.IsNullOrWhiteSpace(request.FirstName) || string.IsNullOrWhiteSpace(request.LastName) || string.IsNullOrWhiteSpace(request.Password) || string.IsNullOrWhiteSpace(request.BirthDate))
+            if (string.IsNullOrWhiteSpace(request.PhoneNumber) || string.IsNullOrWhiteSpace(request.FirstName) || string.IsNullOrWhiteSpace(request.LastName) || string.IsNullOrWhiteSpace(request.Password) || string.IsNullOrWhiteSpace(request.BirthDate))
                 return (false, "Enter all lines");
 
-            var exists = await _db.Users.AnyAsync(user => user.Id == request.Id);
+            var exists = await _db.Users.AnyAsync(user => user.PhoneNumber == request.PhoneNumber);
             if (exists)
                 return (false, "User already exists");
 
@@ -56,29 +52,36 @@ namespace GLAS_Server.Services
 
         }
 
-        public async Task<(bool Success, string Message)> LoginAsync(DTO.LoginRequest request)
+        public async Task<UserProfile?> LoginAsync(DTO.LoginRequest request)
         {
 
-            if (string.IsNullOrWhiteSpace(request.FirstName) || string.IsNullOrWhiteSpace(request.LastName) || string.IsNullOrWhiteSpace(request.Password))
-                return (false, "Enter all lines");
+            if (string.IsNullOrWhiteSpace(request.PhoneNumber) || string.IsNullOrWhiteSpace(request.Password))
+                return null;
 
 
-            var exists = await _db.Users.AnyAsync(user => user.FirstName == request.FirstName && user.LastName == request.LastName && user.Password == request.Password);
+            var exists = await _db.Users.AnyAsync(user => user.PhoneNumber == request.PhoneNumber && user.Password == request.Password);
             if (!exists)
-                return (false, "Incorrect username or password");
+                return null;
 
-            return (true, "User logged in!");
+            var result_profile = new UserProfile
+            {
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+                PhoneNumber = request.PhoneNumber,
+                //....
+            };
+            return result_profile;
 
         }
         public async Task<(bool, string)> UpdateProfileAsync(DTO.UserProfile request)
         {
 
-            var user = await _db.Users.FirstOrDefaultAsync(user => user.Id == request.Id);
+            var user = await _db.Users.FirstOrDefaultAsync(user => user.PhoneNumber == request.PhoneNumber);
             if (user == null)
                 return (true, "User not found");
 
             user.BirthDate = request.BirthDate;
-
+            //...
             await _db.SaveChangesAsync();
             return (true, "Profile updated!");
 
