@@ -1,0 +1,166 @@
+# ================================
+# Vue Frontend (GLAS_Client)
+# ================================
+GLAS_Client/node_modules/
+GLAS_Client/dist/
+GLAS_Client/.env
+GLAS_Client/.env.local
+GLAS_Client/.env.*.local
+GLAS_Client/coverage/
+GLAS_Client/.vscode/
+GLAS_Client/.vs/
+GLAS_Client/*.log
+
+# Vue build output
+GLAS_Client/.output/
+GLAS_Client/.nuxt/
+GLAS_Client/.next/
+
+# Testing
+GLAS_Client/playwright-report/
+GLAS_Client/test-results/
+GLAS_Client/playwright/.cache/
+
+# IDE
+GLAS_Client/.idea/
+GLAS_Client/.swc/
+GLAS_Client/.DS_Store
+
+# ================================
+# C# Backend (GLAS_Server)
+# ================================
+GLAS_Server/bin/
+GLAS_Server/obj/
+GLAS_Server/.vs/
+GLAS_Server/.vscode/
+GLAS_Server/.idea/
+
+# User-specific files
+GLAS_Server/*.user
+GLAS_Server/*.suo
+GLAS_Server/*.userosscache
+GLAS_Server/*.sln.docstates
+
+# Build results
+GLAS_Server/[Dd]ebug/
+GLAS_Server/[Dd]ebugPublic/
+GLAS_Server/[Rr]elease/
+GLAS_Server/[Rr]eleases/
+GLAS_Server/x64/
+GLAS_Server/x86/
+GLAS_Server/[Aa][Rr][Mm]/
+GLAS_Server/[Aa][Rr][Mm]64/
+GLAS_Server/bld/
+GLAS_Server/[Bb]in/
+GLAS_Server/[Oo]bj/
+GLAS_Server/[Ll]og/
+GLAS_Server/[Ll]ogs/
+
+# Entity Framework
+GLAS_Server/Migrations/
+
+# Package Manager
+GLAS_Server/packages/
+GLAS_Server/.nuget/
+
+# ================================
+# Common / Root
+# ================================
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Dependency directories
+node_modules/
+jspm_packages/
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional stylelint cache
+.stylelintcache
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Optional dotenv
+.env.*
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows
+Desktop.ini
+$RECYCLE.BIN/
+
+# Linux
+*~
+
+# ================================
+# Прекомпилированные исходники
+# ================================
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+*.pyc
+
+# ================================
+# Package Files
+# ================================
+*.jar
+*.war
+*.nar
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# ================================
+# Database
+# ================================
+*.db
+*.sqlite
+*.sqlite3
+
+# ================================
+# Visual Studio Code
+# ================================
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
