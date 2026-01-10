@@ -1,31 +1,30 @@
 {
   "format": 1,
   "restore": {
-    "/home/modderpath/Projects/GLAS-smart-civilian-AI-assistant-for-cities/GLAS_Server/GLAS_Server.csproj": {}
+    "/home/dev/projects/GLAS-smart-civilian-AI-assistant-for-cities/GLAS_Server/GLAS_Server.csproj": {}
   },
   "projects": {
-    "/home/modderpath/Projects/GLAS-smart-civilian-AI-assistant-for-cities/GLAS_Server/GLAS_Server.csproj": {
+    "/home/dev/projects/GLAS-smart-civilian-AI-assistant-for-cities/GLAS_Server/GLAS_Server.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/modderpath/Projects/GLAS-smart-civilian-AI-assistant-for-cities/GLAS_Server/GLAS_Server.csproj",
+        "projectUniqueName": "/home/dev/projects/GLAS-smart-civilian-AI-assistant-for-cities/GLAS_Server/GLAS_Server.csproj",
         "projectName": "GLAS_Server",
-        "projectPath": "/home/modderpath/Projects/GLAS-smart-civilian-AI-assistant-for-cities/GLAS_Server/GLAS_Server.csproj",
-        "packagesPath": "/home/modderpath/.nuget/packages/",
-        "outputPath": "/home/modderpath/Projects/GLAS-smart-civilian-AI-assistant-for-cities/GLAS_Server/obj/",
+        "projectPath": "/home/dev/projects/GLAS-smart-civilian-AI-assistant-for-cities/GLAS_Server/GLAS_Server.csproj",
+        "packagesPath": "/home/dev/.nuget/packages/",
+        "outputPath": "/home/dev/projects/GLAS-smart-civilian-AI-assistant-for-cities/GLAS_Server/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/modderpath/.nuget/NuGet/NuGet.Config"
+          "/home/dev/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
-          "net9.0"
+          "net8.0"
         ],
         "sources": {
-          "/usr/lib64/dotnet/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net9.0": {
-            "targetAlias": "net9.0",
+          "net8.0": {
+            "targetAlias": "net8.0",
             "projectReferences": {}
           }
         },
@@ -33,17 +32,11 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
-        },
-        "SdkAnalysisLevel": "9.0.100"
+        }
       },
       "frameworks": {
-        "net9.0": {
-          "targetAlias": "net9.0",
+        "net8.0": {
+          "targetAlias": "net8.0",
           "dependencies": {
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
@@ -77,7 +70,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib64/dotnet/sdk/9.0.112/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.122/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
