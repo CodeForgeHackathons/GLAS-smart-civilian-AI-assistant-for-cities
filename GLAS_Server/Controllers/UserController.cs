@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using GLAS_Server.DTO;
 using GLAS_Server.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GLAS_Server.Controllers
 {
@@ -20,6 +21,7 @@ namespace GLAS_Server.Controllers
         // api/user/profile/{username}
 
         [HttpGet("profile/{id}")]
+        [Authorize]  // Требует JWT токен
         public async Task<IActionResult> GetProfile(uint id)
         {
             var profile = await _userService.GetProfileAsync(id);
@@ -34,23 +36,25 @@ namespace GLAS_Server.Controllers
         //api/user/register(JSON body)
 
         [HttpPost("login")]
+        [AllowAnonymous]  // Разрешаем доступ без токена для логина
         public async Task<IActionResult> LoginUser(LoginRequest loginRequestJSON)
         {
             var result = await _userService.LoginAsync(loginRequestJSON);
 
-            if (!result.Success) return NotFound(result.Message);
+            if (result == null) return Unauthorized("Invalid credentials");
 
-            return Ok(result.Message);
+            return Ok(result);
         }
 
         //api/user/register(JSON body)
 
         [HttpPost("register")]
+        [AllowAnonymous]  // Разрешаем регистрацию без токена
         public async Task<IActionResult> RegisterUser(RegisterRequest registerRequestJSON)
         {
             var result = await _userService.RegisterAsync(registerRequestJSON);
 
-            if (!result.Success) return NotFound(result.Message);
+            if (!result.Success) return BadRequest(result.Message);
 
             return Ok(result.Message);
 

@@ -4,8 +4,8 @@ namespace GLAS_Server.Models
 {
     public class NotificationSettings
     {
-        public int Id { get; set; }
-        public int UserId { get; set; }
+        public uint Id { get; set; }
+        public uint AccountID { get; set; }
         public bool AchievementsEnabled { get; set; } = true;
         public bool GeneralEnabled { get; set; } = true;
         public bool SoundEnabled { get; set; } = true;

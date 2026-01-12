@@ -6,6 +6,8 @@ namespace GLAS_Server.DTO
     public class UserProfile
     {
 
+        [JsonPropertyName("accountID")]
+        public string AccountID { get; set; } = string.Empty;
         [JsonPropertyName("phoneNumber")]
         public string PhoneNumber { get; set; } = string.Empty;
         [JsonPropertyName("firstName")]

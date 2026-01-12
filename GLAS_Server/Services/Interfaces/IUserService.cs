@@ -9,7 +9,7 @@ namespace GLAS_Server.Services.Interfaces
         Task<(bool Success, string Message)> RegisterAsync(RegisterRequest request);
 
 
-        Task<UserProfile?> LoginAsync(LoginRequest request);
+        Task<LoginResponse?> LoginAsync(LoginRequest request);
 
 
         Task<UserProfile?> GetProfileAsync(uint Id);

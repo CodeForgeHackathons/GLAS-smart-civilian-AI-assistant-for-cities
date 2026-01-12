@@ -3,17 +3,20 @@ using GLAS_Server.Data;
 using GLAS_Server.DTO;
 using Microsoft.EntityFrameworkCore;
 using GLAS_Server.Models;
+using BCrypt.Net;
 namespace GLAS_Server.Services
 {
 
     public class UserService : IUserService
     {
         private readonly AppDbContext _db;
+        private readonly IJwtTokenProvider _jwtTokenProvider;
 
-        public UserService(AppDbContext db)
+        public UserService(AppDbContext db, IJwtTokenProvider jwtTokenProvider)
         {
 
             _db = db;
+            _jwtTokenProvider = jwtTokenProvider;
 
         }
 
@@ -41,10 +44,19 @@ namespace GLAS_Server.Services
                 return (false, "Enter all lines");
 
             var exists = await _db.Users.AnyAsync(user => user.PhoneNumber == request.PhoneNumber);
+
             if (exists)
                 return (false, "User already exists");
 
-            var user = new User { FirstName = request.FirstName, LastName = request.LastName, Password = request.Password, BirthDate = request.BirthDate };
+            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(request.Password);
+            var user = new User
+            {
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+                Password = hashedPassword,
+                BirthDate = request.BirthDate,
+                PhoneNumber = request.PhoneNumber
+            };
             _db.Users.Add(user);
             await _db.SaveChangesAsync();
             return (Success: true, Message: "User registered!");
@@ -52,23 +64,30 @@ namespace GLAS_Server.Services
 
         }
 
-        public async Task<UserProfile?> LoginAsync(DTO.LoginRequest request)
+        public async Task<LoginResponse?> LoginAsync(DTO.LoginRequest request)
         {
 
             if (string.IsNullOrWhiteSpace(request.PhoneNumber) || string.IsNullOrWhiteSpace(request.Password))
                 return null;
 
 
-            var exists = await _db.Users.AnyAsync(user => user.PhoneNumber == request.PhoneNumber && user.Password == request.Password);
-            if (!exists)
+            var user = await _db.Users.FirstOrDefaultAsync(u => u.PhoneNumber == request.PhoneNumber);
+            if (user == null)
                 return null;
 
-            var result_profile = new UserProfile
+            if (!BCrypt.Net.BCrypt.Verify(request.Password, user.Password))
+                return null;
+
+            var token = _jwtTokenProvider.GenerateToken(user.Id, user.PhoneNumber);
+
+            var result_profile = new LoginResponse
             {
-                FirstName = request.FirstName,
-                LastName = request.LastName,
-                PhoneNumber = request.PhoneNumber,
-                //....
+                AccountID = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                PhoneNumber = user.PhoneNumber,
+                BirthDate = user.BirthDate,
+                Token = token
             };
             return result_profile;
 

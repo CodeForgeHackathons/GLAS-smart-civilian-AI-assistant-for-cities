@@ -1,6 +1,10 @@
 using GLAS_Server.Data;
 using GLAS_Server.Services;
 using GLAS_Server.Services.Interfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+
 var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 {
     Args = args,
@@ -21,6 +25,32 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IJwtTokenProvider, JwtTokenProvider>();
+
+// Конфигурируем JWT authentication
+var jwtSettings = builder.Configuration.GetSection("Jwt");
+var secretKey = jwtSettings["SecretKey"];
+var key = Encoding.ASCII.GetBytes(secretKey);
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(key),
+        ValidateIssuer = true,
+        ValidIssuer = jwtSettings["Issuer"],
+        ValidateAudience = true,
+        ValidAudience = jwtSettings["Audience"],
+        ValidateLifetime = true,
+        ClockSkew = TimeSpan.Zero
+    };
+});
 
 
 
@@ -45,6 +75,9 @@ if (app.Environment.IsDevelopment())
         options.RoutePrefix = "swagger";
     });
 }
+
+app.UseAuthentication();  // JWT middleware
+app.UseAuthorization();   // Authorization middleware
 
 app.MapControllers();
 
