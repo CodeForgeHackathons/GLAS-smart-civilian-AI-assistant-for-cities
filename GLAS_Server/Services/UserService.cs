@@ -4,6 +4,7 @@ using GLAS_Server.DTO;
 using Microsoft.EntityFrameworkCore;
 using GLAS_Server.Models;
 using BCrypt.Net;
+using System.Text.RegularExpressions;
 namespace GLAS_Server.Services
 {
 
@@ -104,6 +105,31 @@ namespace GLAS_Server.Services
             await _db.SaveChangesAsync();
             return (true, "Profile updated!");
 
+        }
+
+        public async Task<(bool Success, string Message)> ChangePasswordAsync(DTO.ChangePasswordRequest request)
+        {
+            if (string.IsNullOrWhiteSpace(request.PhoneNumber) || string.IsNullOrWhiteSpace(request.OldPassword) || string.IsNullOrWhiteSpace(request.NewPassword))
+                return (false, "All fields are required");
+
+            var user = await _db.Users.FirstOrDefaultAsync(u => u.PhoneNumber == request.PhoneNumber);
+            if (user == null)
+                return (false, "User not found");
+
+            if (!BCrypt.Net.BCrypt.Verify(request.OldPassword, user.Password))
+                return (false, "Old password is incorrect");
+
+            // Validate new password strength
+            if (request.NewPassword.Length < 8)
+                return (false, "New password must be at least 8 characters long");
+
+            if (!Regex.IsMatch(request.NewPassword, @"[a-zA-Z]") || !Regex.IsMatch(request.NewPassword, @"\d"))
+                return (false, "New password must contain at least one letter and one number");
+
+            var hashedNewPassword = BCrypt.Net.BCrypt.HashPassword(request.NewPassword);
+            user.Password = hashedNewPassword;
+            await _db.SaveChangesAsync();
+            return (true, "Password changed successfully");
         }
 
 

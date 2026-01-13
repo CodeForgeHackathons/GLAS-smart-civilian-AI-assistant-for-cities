@@ -18,6 +18,9 @@ namespace GLAS_Server.Services.Interfaces
         Task<(bool Success, string Message)> UpdateProfileAsync(UserProfile request);
 
 
+        Task<(bool Success, string Message)> ChangePasswordAsync(ChangePasswordRequest request);
+
+
         //       Task<bool> DeleteUserAsync(int userId);
     }
 }

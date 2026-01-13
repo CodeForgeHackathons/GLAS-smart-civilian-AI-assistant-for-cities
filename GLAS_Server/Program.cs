@@ -2,8 +2,10 @@ using GLAS_Server.Data;
 using GLAS_Server.Services;
 using GLAS_Server.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Npgsql.EntityFrameworkCore.PostgreSQL;
 
 var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 {
