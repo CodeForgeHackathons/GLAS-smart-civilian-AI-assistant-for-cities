@@ -12,7 +12,7 @@ var builder = WebApplication.CreateBuilder(new WebApplicationOptions
     Args = args,
     WebRootPath = "wwwroot",
     ContentRootPath = Directory.GetCurrentDirectory(),
-    ApplicationName = "FitnessTrackerBack"
+    ApplicationName = "GLAS_Server"
 });
 
 builder.WebHost.UseUrls("http://0.0.0.0:5024");
@@ -31,7 +31,7 @@ builder.Services.AddScoped<IJwtTokenProvider, JwtTokenProvider>();
 
 // Конфиг JWT authentication
 var jwtSettings = builder.Configuration.GetSection("Jwt");
-var secretKey = jwtSettings["SecretKey"];
+var secretKey = jwtSettings["SecretKey"] ?? throw new InvalidOperationException("JWT SecretKey is not configured");
 var key = Encoding.ASCII.GetBytes(secretKey);
 
 builder.Services.AddAuthentication(options =>
