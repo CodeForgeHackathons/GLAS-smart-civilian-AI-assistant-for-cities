@@ -29,7 +29,7 @@ builder.Services.AddControllers();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IJwtTokenProvider, JwtTokenProvider>();
 
-// Конфигурируем JWT authentication
+// Конфиг JWT authentication
 var jwtSettings = builder.Configuration.GetSection("Jwt");
 var secretKey = jwtSettings["SecretKey"];
 var key = Encoding.ASCII.GetBytes(secretKey);

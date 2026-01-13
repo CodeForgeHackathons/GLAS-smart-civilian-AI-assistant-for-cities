@@ -119,7 +119,6 @@ namespace GLAS_Server.Services
             if (!BCrypt.Net.BCrypt.Verify(request.OldPassword, user.Password))
                 return (false, "Old password is incorrect");
 
-            // Validate new password strength
             if (request.NewPassword.Length < 8)
                 return (false, "New password must be at least 8 characters long");
 

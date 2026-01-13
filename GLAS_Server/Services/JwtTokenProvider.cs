@@ -2,14 +2,10 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
+using GLAS_Server.Services.Interfaces;
 
 namespace GLAS_Server.Services
 {
-    public interface IJwtTokenProvider
-    {
-        string GenerateToken(uint userId, string phoneNumber);
-    }
-
     public class JwtTokenProvider : IJwtTokenProvider
     {
         private readonly IConfiguration _config;
