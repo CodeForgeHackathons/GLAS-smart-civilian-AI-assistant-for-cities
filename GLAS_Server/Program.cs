@@ -28,6 +28,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IJwtTokenProvider, JwtTokenProvider>();
+builder.Services.AddScoped<ISmsProvider, SmsProvider>();
 
 // Конфиг JWT authentication
 var jwtSettings = builder.Configuration.GetSection("Jwt");

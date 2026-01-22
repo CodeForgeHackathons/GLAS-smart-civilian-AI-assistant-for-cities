@@ -9,5 +9,9 @@ namespace GLAS_Server.Models
         public string LastName { get; set; } = string.Empty;
         public string Password { get; set; } = string.Empty;
         public string BirthDate { get; set; } = string.Empty;
+
+        // Для восстановления пароля через SMS
+        public string? PasswordResetCode { get; set; }
+        public DateTime? PasswordResetCodeExpiry { get; set; }
     }
 }

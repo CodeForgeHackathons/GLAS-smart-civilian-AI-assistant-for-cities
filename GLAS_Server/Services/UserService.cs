@@ -12,12 +12,16 @@ namespace GLAS_Server.Services
     {
         private readonly AppDbContext _db;
         private readonly IJwtTokenProvider _jwtTokenProvider;
+        private readonly ISmsProvider _smsProvider;
+        private readonly ILogger<UserService> _logger;
 
-        public UserService(AppDbContext db, IJwtTokenProvider jwtTokenProvider)
+        public UserService(AppDbContext db, IJwtTokenProvider jwtTokenProvider, ISmsProvider smsProvider, ILogger<UserService> logger)
         {
 
             _db = db;
             _jwtTokenProvider = jwtTokenProvider;
+            _smsProvider = smsProvider;
+            _logger = logger;
 
         }
 
@@ -129,6 +133,106 @@ namespace GLAS_Server.Services
             user.Password = hashedNewPassword;
             await _db.SaveChangesAsync();
             return (true, "Password changed successfully");
+        }
+
+        public async Task<(bool Success, string Message)> RequestPasswordResetAsync(string phoneNumber)
+        {
+            if (string.IsNullOrWhiteSpace(phoneNumber))
+                return (false, "Phone number is required");
+
+            var user = await _db.Users.FirstOrDefaultAsync(u => u.PhoneNumber == phoneNumber);
+            if (user == null)
+                return (false, "User not found");
+
+            // Генерируем 6-значный код
+            var resetCode = GenerateRandomCode(6);
+
+            // Сохраняем код с временем истечения (10 минут)
+            user.PasswordResetCode = resetCode;
+            user.PasswordResetCodeExpiry = DateTime.UtcNow.AddMinutes(10);
+
+            await _db.SaveChangesAsync();
+
+            // Отправляем SMS
+            var message = $"Ваш код для восстановления пароля: {resetCode}. Код действителен 10 минут.";
+            var smsSent = await _smsProvider.SendSmsAsync(phoneNumber, message);
+
+            if (smsSent)
+            {
+                _logger.LogInformation($"Код восстановления пароля отправлен на номер {phoneNumber}");
+                return (true, "Reset code sent to your phone");
+            }
+            else
+            {
+                // Удаляем код, если не удалось отправить SMS
+                user.PasswordResetCode = null;
+                user.PasswordResetCodeExpiry = null;
+                await _db.SaveChangesAsync();
+
+                _logger.LogError($"Не удалось отправить SMS на номер {phoneNumber}");
+                return (false, "Failed to send SMS. Please try again");
+            }
+        }
+
+        public async Task<(bool Success, string Message)> VerifyAndResetPasswordAsync(VerifyPasswordResetCodeRequest request)
+        {
+            if (string.IsNullOrWhiteSpace(request.PhoneNumber) || 
+                string.IsNullOrWhiteSpace(request.Code) || 
+                string.IsNullOrWhiteSpace(request.NewPassword))
+                return (false, "All fields are required");
+
+            var user = await _db.Users.FirstOrDefaultAsync(u => u.PhoneNumber == request.PhoneNumber);
+            if (user == null)
+                return (false, "User not found");
+
+            // Проверяем наличие кода
+            if (string.IsNullOrEmpty(user.PasswordResetCode))
+                return (false, "No password reset request found");
+
+            // Проверяем срок действия кода
+            if (user.PasswordResetCodeExpiry == null || DateTime.UtcNow > user.PasswordResetCodeExpiry)
+            {
+                user.PasswordResetCode = null;
+                user.PasswordResetCodeExpiry = null;
+                await _db.SaveChangesAsync();
+                return (false, "Reset code has expired");
+            }
+
+            // Проверяем код
+            if (user.PasswordResetCode != request.Code)
+                return (false, "Invalid reset code");
+
+            // Проверяем требования к новому паролю
+            if (request.NewPassword.Length < 8)
+                return (false, "New password must be at least 8 characters long");
+
+            if (!Regex.IsMatch(request.NewPassword, @"[a-zA-Z]") || !Regex.IsMatch(request.NewPassword, @"\d"))
+                return (false, "New password must contain at least one letter and one number");
+
+            // Обновляем пароль
+            var hashedNewPassword = BCrypt.Net.BCrypt.HashPassword(request.NewPassword);
+            user.Password = hashedNewPassword;
+            user.PasswordResetCode = null;
+            user.PasswordResetCodeExpiry = null;
+
+            await _db.SaveChangesAsync();
+
+            _logger.LogInformation($"Пароль пользователя успешно изменен через SMS");
+            return (true, "Password reset successfully");
+        }
+
+        /// <summary>
+        /// Генерирует случайный цифровой код
+        /// </summary>
+        private string GenerateRandomCode(int length)
+        {
+            var random = new Random();
+            var code = "";
+            for (int i = 0; i < length; i++)
+            {
+                code += random.Next(0, 10).ToString();
+            }
+            return code;
         }
 
 

@@ -62,6 +62,34 @@ namespace GLAS_Server.Controllers
         }
         //[HttpPost("update")]
         //public async Task<IActionResult> UpdateUserData()
+
+        /// <summary>
+        /// Запрашивает отправку кода восстановления пароля на номер телефона
+        /// </summary>
+        [HttpPost("request-password-reset")]
+        [AllowAnonymous]
+        public async Task<IActionResult> RequestPasswordReset(ResetPasswordViaSmsRequest request)
+        {
+            var result = await _userService.RequestPasswordResetAsync(request.PhoneNumber);
+
+            if (!result.Success) return BadRequest(result.Message);
+
+            return Ok(result.Message);
+        }
+
+        /// <summary>
+        /// Проверяет код восстановления пароля и меняет пароль
+        /// </summary>
+        [HttpPost("verify-password-reset")]
+        [AllowAnonymous]
+        public async Task<IActionResult> VerifyPasswordReset(VerifyPasswordResetCodeRequest request)
+        {
+            var result = await _userService.VerifyAndResetPasswordAsync(request);
+
+            if (!result.Success) return BadRequest(result.Message);
+
+            return Ok(result.Message);
+        }
     }
 
 

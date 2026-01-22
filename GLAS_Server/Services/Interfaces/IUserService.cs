@@ -20,6 +20,19 @@ namespace GLAS_Server.Services.Interfaces
         Task<(bool Success, string Message)> ChangePasswordAsync(ChangePasswordRequest request);
 
 
+        /// <summary>
+        /// Запрашивает отправку кода восстановления пароля на номер телефона
+        /// </summary>
+        Task<(bool Success, string Message)> RequestPasswordResetAsync(string phoneNumber);
+
+
+        /// <summary>
+        /// Проверяет код восстановления пароля и меняет пароль
+        /// </summary>
+        Task<(bool Success, string Message)> VerifyAndResetPasswordAsync(VerifyPasswordResetCodeRequest request);
+
+
         //       Task<bool> DeleteUserAsync(int userId);
     }
 }
+
