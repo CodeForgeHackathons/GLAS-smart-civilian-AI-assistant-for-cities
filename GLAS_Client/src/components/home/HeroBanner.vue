@@ -11,15 +11,15 @@
 
 <style scoped>
 .banner {
-  background: url("@/assets/home/hero-bg.jpg");
-  border-radius: 20px;
-  padding: 40px;
-  height: 260px;
-  color:#1e2a4a;
+  margin-bottom: 40px;
 }
 h1{
-  font-size: 32px;
-  margin-bottom: 12px;
+  font-size: 34px;
+  line-height: 1.2;
+  margin-bottom: 16px;
+  color: #1e2a4a;
 }
-p{font-size: 18px}
+p{font-size: 18px;
+color: #5b6b8c;
+max-width: 420px;}
 </style>

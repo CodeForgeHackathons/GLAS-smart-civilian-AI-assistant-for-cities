@@ -17,22 +17,31 @@
 
 <style scoped>
 .sidebar{
-  background: linear-gradient(180deg, #2f6bff, #4fa3ff);
+  background: linear-gradient(180deg, #2f6bff, #4f8cff);
+  border-radius: 20px;
   color:white;
   padding: 20px;
+  display: flex;
+  flex-direction: column;
 }
 .logo{
+  font-size: 18px;
   font-weight: 700;
-  margin-bottom: 30px;
+  margin-bottom: 32px;
 }
 nav a{
-  display: block;
-  padding: 12px 0;
+  padding: 12px 16px;
+  border-radius: 12px;
+  margin-bottom: 8px;
   opacity: 0.85;
   cursor: pointer;
 }
 nav.a.active{
+  background: rgba(255,255,255,0.25);
   font-weight: 600;
-  opacity: 1;
+}
+nav.a.hover{
+  background: rgba(255,255,255,0.25);
+  font-weight: 600;
 }
 </style>

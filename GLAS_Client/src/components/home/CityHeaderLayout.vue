@@ -15,8 +15,10 @@ import StatusPanel from '@/components/home/StatusPanel.vue'
 <style scoped>
 .city-layout {
   display:grid;
-  grid-template-columns:240px 1fr 320px;
+  grid-template-columns:260px 1fr 360px;
+  gap: 24px;
   height: 100vh;
+  padding: 24px;
   background: #f4f7fb;
 }
 </style>

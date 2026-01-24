@@ -11,20 +11,21 @@
 <style scoped>
 .actions {
   display: flex;
-  gap: 16px;
-  margin-top: 20px;
+  gap: 20px;
 }
 button{
-  padding: 14px 24px;
-  border-radius: 12px;
+  padding: 16px 28px;
+  border-radius: 14px;
   font-size: 16px;
-  border: none;
+  font-weight: 500;
   cursor: pointer;
 }
 
 .primary{
   background: #2f6bff;
   color: white;
+  border: none;
+  box-shadow: 0 10px 20px rgba(47, 107, 255, 0.3);
 }
 .secondary{
   background: white;
