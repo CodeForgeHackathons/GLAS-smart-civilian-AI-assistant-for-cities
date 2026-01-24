@@ -17,7 +17,7 @@ import StatusPanel from '@/components/home/StatusPanel.vue'
   display:grid;
   grid-template-columns:260px 1fr 360px;
   gap: 24px;
-  height: 100vh;
+  min-height: 100vh;
   padding: 24px;
   background: #f4f7fb;
 }
