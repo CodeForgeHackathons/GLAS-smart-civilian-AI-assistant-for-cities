@@ -1,9 +1,7 @@
 <script setup lang="ts">
-import TheWelcome from '../components/TheWelcome.vue'
+import CityHeaderLayout from '@/components/home/CityHeaderLayout.vue'
 </script>
 
 <template>
-  <main>
-    <TheWelcome />
-  </main>
+  <CityHeaderLayout />
 </template>
