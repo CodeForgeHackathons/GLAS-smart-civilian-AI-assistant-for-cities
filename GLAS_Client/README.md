@@ -1,73 +1,198 @@
-# GLAS_Client
+# GLAS Client (Frontend)
 
-This template should help get you started developing with Vue 3 in Vite.
+## 📌 Общее описание
 
-## Recommended IDE Setup
+**GLAS Client** — фронтенд‑часть проекта *GLAS (Smart Civilian AI Assistant for Cities)*.
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+Проект реализован на **Vue 3 + TypeScript** с использованием **Vite** и предназначен для отображения пользовательского интерфейса городского сервиса:
 
-## Recommended Browser Setup
+* главный экран пользователя;
+* отправка обращений;
+* просмотр статусов;
+* в дальнейшем — карта, админ‑панель и аналитика.
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+Этот README предназначен **для разработчиков**, которые будут работать с кодовой базой.
 
-## Type Support for `.vue` Imports in TS
+---
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+## 🧱 Технологический стек
 
-## Customize configuration
+* **Vue 3** (Composition API)
+* **TypeScript**
+* **Vite** (сборка и dev‑сервер)
+* **Vue Router** (маршрутизация)
+* **Pinia** (state‑менеджер, задел на будущее)
+* **ESLint + Prettier** (качество кода)
+* **Playwright / Vitest** (тесты)
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+---
 
-## Project Setup
+## 📁 Структура проекта
 
-```sh
+```
+GLAS_Client/
+├── public/                 # Статические файлы (favicon и т.п.)
+├── src/
+│   ├── assets/             # Глобальные стили и изображения
+│   │   ├── base.css        # Базовые reset / layout стили
+│   │   └── main.css        # Основные глобальные стили
+│   │
+│   ├── components/         # Переиспользуемые компоненты
+│   │   └── home/           # Компоненты главного экрана
+│   │       ├── CityHeaderLayout.vue  # Основной layout (3 колонки)
+│   │       ├── SidebarMenu.vue       # Левое навигационное меню
+│   │       ├── MainHero.vue          # Центральная карточка
+│   │       ├── HeroBanner.vue        # Заголовок и описание
+│   │       ├── HeroActions.vue       # Кнопки действий
+│   │       └── StatusPanel.vue       # Правая панель статусов
+│   │
+│   ├── router/
+│   │   └── index.ts        # Конфигурация маршрутов
+│   │
+│   ├── stores/
+│   │   └── counter.ts      # Пример Pinia store (заглушка)
+│   │
+│   ├── views/
+│   │   └── HomeView.vue    # Главная страница (entry point UI)
+│   │
+│   ├── App.vue             # Корневой компонент
+│   └── main.ts             # Точка входа приложения
+│
+├── index.html              # HTML-шаблон
+├── vite.config.ts          # Конфигурация Vite
+├── package.json            # Зависимости и npm-скрипты
+└── README.md               # Документация
+```
+
+---
+
+## 🧩 Архитектура главного экрана
+
+Главный экран построен по принципу **layout + композиция компонентов**.
+
+```
+CityHeaderLayout
+├── SidebarMenu     (левая навигация)
+├── MainHero
+│   ├── HeroBanner  (заголовок, описание)
+│   └── HeroActions (CTA-кнопки)
+└── StatusPanel     (статусы обращений)
+```
+
+### Почему так:
+
+* упрощает масштабирование;
+* удобно подключать реальные данные;
+* легко заменять визуальные элементы (фон, иллюстрации).
+
+---
+
+## 🎨 Стилизация
+
+* **Карточная модель UI** (card-based layout)
+* Глобальные стили: `src/assets/base.css`
+* Компонентные стили: scoped CSS внутри `.vue`
+
+В проекте **пока не используется UI-библиотека** — это осознанное решение для гибкости дизайна.
+
+---
+
+## 🚦 Маршрутизация
+
+📍 `src/router/index.ts`
+
+```ts
+{
+  path: '/',
+  name: 'home',
+  component: HomeView
+}
+```
+
+На данный момент:
+
+* `/` — главный экран пользователя
+
+---
+
+## ▶️ Запуск проекта (Development)
+
+⚠️ Все команды выполняются **из папки `GLAS_Client`**.
+
+```bash
+cd GLAS_Client
+```
+
+### Установка зависимостей
+
+```bash
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+### Запуск dev-сервера
 
-```sh
+```bash
 npm run dev
 ```
 
-### Type-Check, Compile and Minify for Production
+После запуска:
 
-```sh
+```
+http://localhost:5173/
+```
+
+---
+
+## 🏗️ Сборка проекта (Production)
+
+```bash
 npm run build
 ```
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
+Результат появится в папке:
 
-```sh
-npm run test:unit
+```
+dist/
 ```
 
-### Run End-to-End Tests with [Playwright](https://playwright.dev)
+---
 
-```sh
-# Install browsers for the first run
-npx playwright install
+## 🌍 Деплой (общее описание)
 
-# When testing on CI, must build the project first
-npm run build
+Типовой сценарий:
 
-# Runs the end-to-end tests
+1. `npm run build`
+2. Разместить содержимое `dist/`:
+
+    * Nginx
+    * Apache
+    * Docker
+    * S3 / CDN
+
+Проект — **чистый SPA**, backend не требуется на этапе деплоя.
+
+---
+
+## 🧪 Тесты
+
+### Unit / component tests
+
+```bash
+npm run test
+```
+
+### E2E (Playwright)
+
+```bash
 npm run test:e2e
-# Runs the tests only on Chromium
-npm run test:e2e -- --project=chromium
-# Runs the tests of a specific file
-npm run test:e2e -- tests/example.spec.ts
-# Runs the tests in debug mode
-npm run test:e2e -- --debug
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+---
 
-```sh
-npm run lint
-```
+## 🧠 Примечания для разработчиков
+
+* Компоненты проектируются **максимально dumb** (без бизнес-логики)
+* Бизнес-логика и состояние будут выноситься в Pinia
+* UI сначала строится как каркас, затем насыщается данными
+
+---
