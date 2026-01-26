@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GLAS_Server")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7eb654466d3ddd79e6bea7cbc7eec91cba4d2e5f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d811f4c7ebbae13ae05d174997d180e4600289de")]
 [assembly: System.Reflection.AssemblyProductAttribute("GLAS_Server")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GLAS_Server")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

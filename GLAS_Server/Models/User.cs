@@ -2,6 +2,7 @@ namespace GLAS_Server.Models
 {
     public class User
     {
+
         public uint Id { get; set; }
         public uint AccountID { get; set; }
         public string PhoneNumber { get; set; } = string.Empty;
@@ -11,7 +12,7 @@ namespace GLAS_Server.Models
         public string BirthDate { get; set; } = string.Empty;
 
         // Для восстановления пароля через SMS
-        public string? PasswordResetCode { get; set; }
-        public DateTime? PasswordResetCodeExpiry { get; set; }
+        public PasswordResetOptions? PasswordResetOpt;
     }
+
 }

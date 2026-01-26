@@ -3,7 +3,6 @@ using GLAS_Server.Data;
 using GLAS_Server.DTO;
 using Microsoft.EntityFrameworkCore;
 using GLAS_Server.Models;
-using BCrypt.Net;
 using System.Text.RegularExpressions;
 namespace GLAS_Server.Services
 {
@@ -148,8 +147,8 @@ namespace GLAS_Server.Services
             var resetCode = GenerateRandomCode(6);
 
             // Сохраняем код с временем истечения (10 минут)
-            user.PasswordResetCode = resetCode;
-            user.PasswordResetCodeExpiry = DateTime.UtcNow.AddMinutes(10);
+            user.PasswordResetOpt.PasswordResetCode = resetCode;
+            user.PasswordResetOpt.PasswordResetCodeExpiry = DateTime.UtcNow.AddMinutes(10);
 
             await _db.SaveChangesAsync();
 
@@ -165,8 +164,8 @@ namespace GLAS_Server.Services
             else
             {
                 // Удаляем код, если не удалось отправить SMS
-                user.PasswordResetCode = null;
-                user.PasswordResetCodeExpiry = null;
+                user.PasswordResetOpt.PasswordResetCode = null;
+                user.PasswordResetOpt.PasswordResetCodeExpiry = null;
                 await _db.SaveChangesAsync();
 
                 _logger.LogError($"Не удалось отправить SMS на номер {phoneNumber}");
@@ -176,8 +175,8 @@ namespace GLAS_Server.Services
 
         public async Task<(bool Success, string Message)> VerifyAndResetPasswordAsync(VerifyPasswordResetCodeRequest request)
         {
-            if (string.IsNullOrWhiteSpace(request.PhoneNumber) || 
-                string.IsNullOrWhiteSpace(request.Code) || 
+            if (string.IsNullOrWhiteSpace(request.PhoneNumber) ||
+                string.IsNullOrWhiteSpace(request.Code) ||
                 string.IsNullOrWhiteSpace(request.NewPassword))
                 return (false, "All fields are required");
 
@@ -186,20 +185,20 @@ namespace GLAS_Server.Services
                 return (false, "User not found");
 
             // Проверяем наличие кода
-            if (string.IsNullOrEmpty(user.PasswordResetCode))
+            if (string.IsNullOrEmpty(user.PasswordResetOpt.PasswordResetCode))
                 return (false, "No password reset request found");
 
             // Проверяем срок действия кода
-            if (user.PasswordResetCodeExpiry == null || DateTime.UtcNow > user.PasswordResetCodeExpiry)
+            if (user.PasswordResetOpt.PasswordResetCodeExpiry == null || DateTime.UtcNow > user.PasswordResetOpt.PasswordResetCodeExpiry)
             {
-                user.PasswordResetCode = null;
-                user.PasswordResetCodeExpiry = null;
+                user.PasswordResetOpt.PasswordResetCode = null;
+                user.PasswordResetOpt.PasswordResetCodeExpiry = null;
                 await _db.SaveChangesAsync();
                 return (false, "Reset code has expired");
             }
 
             // Проверяем код
-            if (user.PasswordResetCode != request.Code)
+            if (user.PasswordResetOpt.PasswordResetCode != request.Code)
                 return (false, "Invalid reset code");
 
             // Проверяем требования к новому паролю
@@ -212,8 +211,8 @@ namespace GLAS_Server.Services
             // Обновляем пароль
             var hashedNewPassword = BCrypt.Net.BCrypt.HashPassword(request.NewPassword);
             user.Password = hashedNewPassword;
-            user.PasswordResetCode = null;
-            user.PasswordResetCodeExpiry = null;
+            user.PasswordResetOpt.PasswordResetCode = null;
+            user.PasswordResetOpt.PasswordResetCodeExpiry = null;
 
             await _db.SaveChangesAsync();
 
