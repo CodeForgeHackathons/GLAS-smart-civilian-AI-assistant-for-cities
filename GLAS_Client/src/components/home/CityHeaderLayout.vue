@@ -14,11 +14,14 @@ import StatusPanel from '@/components/home/StatusPanel.vue'
 
 <style scoped>
 .city-layout {
-  display:grid;
-  grid-template-columns:260px 1fr 360px;
+  display: grid;
+  grid-template-columns: 280px 1fr 380px;
   gap: 24px;
-  min-height: 100vh;
+  height: 100vh;
   padding: 24px;
   background: #f4f7fb;
+  width: 100%;
+  box-sizing: border-box;
+  overflow-y: auto;
 }
 </style>

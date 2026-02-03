@@ -4,22 +4,18 @@
 
 <template>
 <div class="banner">
-  <h1>Экран пользователя</h1>
-  <p>Сообщите о проблеме в вашем городе</p>
+  <h1>Сообщите о проблеме в вашем городе!</h1>
 </div>
 </template>
 
 <style scoped>
 .banner {
-  margin-bottom: 40px;
+  margin-bottom: 32px;
 }
-h1{
-  font-size: 34px;
-  line-height: 1.2;
-  margin-bottom: 16px;
+h1 {
+  font-size: 28px;
+  line-height: 1.3;
   color: #1e2a4a;
+  font-weight: 600;
 }
-p{font-size: 18px;
-color: #5b6b8c;
-max-width: 420px;}
 </style>
