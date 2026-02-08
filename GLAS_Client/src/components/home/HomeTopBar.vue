@@ -1,9 +1,11 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { RouterLink } from 'vue-router'
+</script>
 
 <template>
   <header class="top-bar">
     <div class="top-bar-inner">
-      <span class="top-bar-logo">ГЛАС</span>
+      <RouterLink to="/" class="top-bar-logo">ГЛАС</RouterLink>
       <div class="lang-switcher">
         <button type="button" class="lang-btn active" aria-label="Русский">RU</button>
         <button type="button" class="lang-btn" aria-label="English">EN</button>
@@ -31,6 +33,11 @@
   font-size: 18px;
   font-weight: 700;
   color: #1e2a4a;
+  text-decoration: none;
+}
+
+.top-bar-logo:hover {
+  color: #2563eb;
 }
 
 .lang-switcher {

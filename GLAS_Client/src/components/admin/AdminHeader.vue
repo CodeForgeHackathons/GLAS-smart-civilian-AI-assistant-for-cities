@@ -1,8 +1,16 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { RouterLink } from 'vue-router'
+</script>
 
 <template>
   <header class="admin-header">
     <div class="header-left">
+      <RouterLink to="/" class="back-home" aria-label="На главную">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 4L6 10L12 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="back-home-text">Главная</span>
+      </RouterLink>
       <svg class="play-icon" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M4 3L12 8L4 13V3Z" fill="currentColor"/>
       </svg>
@@ -54,6 +62,34 @@
   display: flex;
   align-items: center;
   gap: 10px;
+}
+
+.back-home {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+  opacity: 0.9;
+  padding: 6px 10px;
+  border-radius: 8px;
+  margin-right: 4px;
+}
+
+.back-home:hover {
+  background: rgba(255, 255, 255, 0.15);
+  opacity: 1;
+}
+
+.back-home-text {
+  display: none;
+}
+
+@media (min-width: 600px) {
+  .back-home-text {
+    display: inline;
+  }
 }
 
 .play-icon {
