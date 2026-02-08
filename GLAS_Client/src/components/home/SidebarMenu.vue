@@ -20,18 +20,18 @@ import { RouterLink } from 'vue-router'
         </svg>
         <span>Главная</span>
       </RouterLink>
-      <a class="nav-link">
+      <RouterLink to="/report" class="nav-link" active-class="active">
         <svg class="nav-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M3 17L17 3M17 3H9M17 3V11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
         <span>Сообщить о проблеме</span>
-      </a>
-      <a class="nav-link">
+      </RouterLink>
+      <RouterLink to="/profile" class="nav-link" active-class="active">
         <svg class="nav-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M3 5H17M3 5L3 15C3 16.1046 3.89543 17 5 17H15C16.1046 17 17 16.1046 17 15V5M3 5L10 10L17 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
         <span>Мои обращения</span>
-      </a>
+      </RouterLink>
       <RouterLink to="/admin" class="nav-link" active-class="active">
         <svg class="nav-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M10 10C12.7614 10 15 7.76142 15 5C15 2.23858 12.7614 0 10 0C7.23858 0 5 2.23858 5 5C5 7.76142 7.23858 10 10 10Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -40,12 +40,12 @@ import { RouterLink } from 'vue-router'
         <span>Администрировать</span>
       </RouterLink>
       <div class="spacer"></div>
-      <a class="nav-link">
+      <RouterLink to="/help" class="nav-link" active-class="active">
         <svg class="nav-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M7.5 10L12.5 15L17.5 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
         <span>Ещё</span>
-      </a>
+      </RouterLink>
     </nav>
 
     <div class="city-silhouette">

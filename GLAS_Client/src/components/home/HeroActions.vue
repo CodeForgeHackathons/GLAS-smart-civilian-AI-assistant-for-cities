@@ -1,20 +1,21 @@
 <script setup lang="ts">
+import { RouterLink } from 'vue-router'
 </script>
 
 <template>
 <div class="actions">
-  <button class="primary">
+  <RouterLink to="/report" class="btn primary">
     <svg class="button-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M6 4L14 10L6 16V4Z" fill="currentColor"/>
     </svg>
     <span>Сообщить о проблеме</span>
-  </button>
-  <button class="secondary">
+  </RouterLink>
+  <RouterLink to="/track" class="btn secondary">
     <svg class="button-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M5 7L10 12L15 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
     <span>Проверить статус</span>
-  </button>
+  </RouterLink>
 </div>
 </template>
 
@@ -23,7 +24,7 @@
   display: flex;
   gap: 16px;
 }
-button {
+.btn {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -36,10 +37,11 @@ button {
   cursor: pointer;
   transition: all 0.2s;
   border: none;
+  text-decoration: none;
 }
 
 @media (max-width: 768px) {
-  button {
+  .btn {
     min-height: 56px;
   }
 }

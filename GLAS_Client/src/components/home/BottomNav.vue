@@ -10,24 +10,24 @@ import { RouterLink } from 'vue-router'
       </svg>
       <span class="nav-item-label">Главная</span>
     </RouterLink>
-    <a href="#" class="nav-item">
+    <RouterLink to="/report" class="nav-item" active-class="active">
       <svg class="nav-item-icon" width="24" height="24" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M3 17L17 3M17 3H9M17 3V11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
       <span class="nav-item-label">Сообщить</span>
-    </a>
-    <a href="#" class="nav-item">
+    </RouterLink>
+    <RouterLink to="/profile" class="nav-item" active-class="active">
       <svg class="nav-item-icon" width="24" height="24" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M3 5H17M3 5L3 15C3 16.1046 3.89543 17 5 17H15C16.1046 17 17 16.1046 17 15V5M3 5L10 10L17 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
       <span class="nav-item-label">Мои обращения</span>
-    </a>
-    <a href="#" class="nav-item">
+    </RouterLink>
+    <RouterLink to="/help" class="nav-item" active-class="active">
       <svg class="nav-item-icon" width="24" height="24" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M7.5 10L12.5 15L17.5 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
       <span class="nav-item-label">Ещё</span>
-    </a>
+    </RouterLink>
   </nav>
 </template>
 
