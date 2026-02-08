@@ -1,4 +1,6 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { RouterLink } from 'vue-router'
+</script>
 
 <template>
   <aside class="sidebar">
@@ -12,33 +14,33 @@
     </div>
 
     <nav>
-      <a class="active">
+      <RouterLink to="/" class="nav-link" active-class="active">
         <svg class="nav-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M3 10L10 3L17 10M10 17V7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
         <span>Главная</span>
-      </a>
-      <a>
+      </RouterLink>
+      <a class="nav-link">
         <svg class="nav-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M3 17L17 3M17 3H9M17 3V11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
         <span>Сообщить о проблеме</span>
       </a>
-      <a>
+      <a class="nav-link">
         <svg class="nav-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M3 5H17M3 5L3 15C3 16.1046 3.89543 17 5 17H15C16.1046 17 17 16.1046 17 15V5M3 5L10 10L17 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
         <span>Мои обращения</span>
       </a>
-      <a>
+      <RouterLink to="/admin" class="nav-link" active-class="active">
         <svg class="nav-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M10 10C12.7614 10 15 7.76142 15 5C15 2.23858 12.7614 0 10 0C7.23858 0 5 2.23858 5 5C5 7.76142 7.23858 10 10 10Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           <path d="M2.5 20C2.5 15.5817 6.08172 12 10.5 12C14.9183 12 18.5 15.5817 18.5 20" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
         <span>Администрировать</span>
-      </a>
+      </RouterLink>
       <div class="spacer"></div>
-      <a>
+      <a class="nav-link">
         <svg class="nav-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M7.5 10L12.5 15L17.5 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
@@ -103,7 +105,8 @@ nav {
   flex: 1;
 }
 
-nav a {
+nav a,
+.nav-link {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -114,14 +117,18 @@ nav a {
   opacity: 0.85;
   cursor: pointer;
   transition: all 0.2s;
+  color: inherit;
+  text-decoration: none;
 }
 
-nav a:hover {
+nav a:hover,
+.nav-link:hover {
   background: rgba(255, 255, 255, 0.15);
   opacity: 1;
 }
 
-nav a.active {
+nav a.active,
+.nav-link.active {
   background: rgba(255, 255, 255, 0.25);
   font-weight: 600;
   opacity: 1;
