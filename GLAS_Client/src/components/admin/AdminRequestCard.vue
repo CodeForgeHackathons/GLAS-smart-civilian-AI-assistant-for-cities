@@ -26,7 +26,16 @@
       <div class="card-image-placeholder">
         <span class="image-placeholder-text">Фото</span>
       </div>
-      <button class="close-btn">Закрыть</button>
+      <div class="card-actions">
+        <button type="button" class="action-btn">Назначить</button>
+        <button type="button" class="action-btn">Изменить статус</button>
+        <button type="button" class="action-btn">Запросить информацию</button>
+      </div>
+      <div class="dialogue-block">
+        <div class="dialogue-title">История диалога</div>
+        <div class="dialogue-placeholder">Сообщения с гражданином (если не аноним)</div>
+      </div>
+      <button type="button" class="close-btn">Закрыть</button>
     </div>
   </aside>
 </template>
@@ -120,6 +129,49 @@
 
 .image-placeholder-text {
   font-size: 14px;
+  color: #9ca3af;
+}
+
+.card-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.action-btn {
+  width: 100%;
+  padding: 12px 16px;
+  background: #f3f4f6;
+  border: 1px solid #e5e7eb;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #1e2a4a;
+  cursor: pointer;
+}
+
+.action-btn:hover {
+  background: #e5e7eb;
+}
+
+.dialogue-block {
+  margin-bottom: 20px;
+  padding: 16px;
+  background: #f9fafb;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+}
+
+.dialogue-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1e2a4a;
+  margin-bottom: 8px;
+}
+
+.dialogue-placeholder {
+  font-size: 13px;
   color: #9ca3af;
 }
 

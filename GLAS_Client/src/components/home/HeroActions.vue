@@ -28,6 +28,7 @@ button {
   align-items: center;
   justify-content: center;
   gap: 8px;
+  min-height: 48px;
   padding: 16px 28px;
   border-radius: 14px;
   font-size: 16px;
@@ -35,6 +36,12 @@ button {
   cursor: pointer;
   transition: all 0.2s;
   border: none;
+}
+
+@media (max-width: 768px) {
+  button {
+    min-height: 56px;
+  }
 }
 
 .primary {

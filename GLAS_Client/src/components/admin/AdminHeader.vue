@@ -25,6 +25,10 @@
         <span class="tab-badge">1</span>
         Требуют внимания
       </span>
+      <span class="tab tab-mine">
+        <span class="tab-badge">0</span>
+        Назначенные мне
+      </span>
     </div>
     <div class="header-right">
       <button class="icon-btn dark"></button>
@@ -106,6 +110,10 @@
 
 .tab-attention {
   background: #0ea5e9;
+}
+
+.tab-mine {
+  background: #8b5cf6;
 }
 
 .header-right {
