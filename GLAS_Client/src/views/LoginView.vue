@@ -1,5 +1,36 @@
 <script setup lang="ts">
+import { ref } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 import HomeTopBar from '@/components/home/HomeTopBar.vue'
+import { useAuthStore } from '@/stores/auth'
+
+const phoneNumber = ref('')
+const password = ref('')
+const isSubmitting = ref(false)
+const error = ref('')
+
+const router = useRouter()
+const route = useRoute()
+const auth = useAuthStore()
+
+async function handleSubmit() {
+  if (isSubmitting.value) return
+
+  error.value = ''
+  isSubmitting.value = true
+
+  try {
+    await auth.login(phoneNumber.value.trim(), password.value)
+
+    const redirect = (route.query.redirect as string) || '/profile'
+    router.push(redirect)
+  } catch (err) {
+    const message = err instanceof Error ? err.message : 'Не удалось войти'
+    error.value = message
+  } finally {
+    isSubmitting.value = false
+  }
+}
 </script>
 
 <template>
@@ -8,11 +39,37 @@ import HomeTopBar from '@/components/home/HomeTopBar.vue'
     <div class="login-wrap">
       <div class="login-card">
         <h1 class="login-title">Вход</h1>
-        <div class="login-field">
-          <label class="input-label">Телефон или email</label>
-          <input type="text" class="input" placeholder="+7 (___) ___-__-__" readonly />
-        </div>
-        <button type="button" class="btn btn-primary">Получить код</button>
+        <form class="login-form" @submit.prevent="handleSubmit">
+          <div class="login-field">
+            <label class="input-label">Телефон</label>
+            <input
+              v-model="phoneNumber"
+              type="tel"
+              class="input"
+              placeholder="+7 900 000 00 00"
+              autocomplete="tel"
+            />
+          </div>
+          <div class="login-field">
+            <label class="input-label">Пароль</label>
+            <input
+              v-model="password"
+              type="password"
+              class="input"
+              placeholder="Введите пароль"
+              autocomplete="current-password"
+            />
+          </div>
+
+          <p v-if="error" class="error-text">
+            {{ error }}
+          </p>
+
+          <button type="submit" class="btn btn-primary" :disabled="isSubmitting">
+            {{ isSubmitting ? 'Входим...' : 'Войти' }}
+          </button>
+        </form>
+
         <div class="login-footer">
           <span>Нет аккаунта?</span>
           <a href="#">Зарегистрироваться</a>
@@ -43,7 +100,7 @@ import HomeTopBar from '@/components/home/HomeTopBar.vue'
   max-width: 400px;
   background: white;
   border-radius: 24px;
-  padding: 32px;
+  padding: 32px 32px 28px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
 }
 
@@ -52,6 +109,11 @@ import HomeTopBar from '@/components/home/HomeTopBar.vue'
   font-size: 22px;
   font-weight: 600;
   color: #1e2a4a;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
 }
 
 .login-field {
@@ -90,6 +152,17 @@ import HomeTopBar from '@/components/home/HomeTopBar.vue'
 .btn-primary {
   background: #2563eb;
   color: white;
+}
+
+.btn-primary:disabled {
+  opacity: 0.7;
+  cursor: default;
+}
+
+.error-text {
+  margin: 0 0 12px;
+  font-size: 14px;
+  color: #dc2626;
 }
 
 .login-footer {
