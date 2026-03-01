@@ -1,5 +1,6 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
+import { logger } from '@/utils/logger'
 
 type AuthUser = {
   accountId: number
@@ -30,6 +31,8 @@ export const useAuthStore = defineStore('auth', () => {
   const isAuthenticated = computed(() => !!token.value)
 
   async function login(phoneNumber: string, password: string) {
+    logger.log('auth:login:start', { phoneNumber })
+
     const response = await fetch(`${API_BASE_URL}/user/login`, {
       method: 'POST',
       headers: {
@@ -43,6 +46,7 @@ export const useAuthStore = defineStore('auth', () => {
 
     if (!response.ok) {
       const message = await response.text()
+      logger.error('auth:login:failed', { phoneNumber, status: response.status, message })
       throw new Error(message || 'Failed to login')
     }
 
@@ -66,9 +70,12 @@ export const useAuthStore = defineStore('auth', () => {
 
     localStorage.setItem(TOKEN_KEY, data.token)
     localStorage.setItem(USER_KEY, JSON.stringify(user.value))
+
+    logger.log('auth:login:success', { accountId: data.accountID, phoneNumber: data.phoneNumber })
   }
 
   function logout() {
+    logger.log('auth:logout', { accountId: user.value?.accountId, phoneNumber: user.value?.phoneNumber })
     token.value = null
     user.value = null
     localStorage.removeItem(TOKEN_KEY)

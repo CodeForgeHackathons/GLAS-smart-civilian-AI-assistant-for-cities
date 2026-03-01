@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import HomeTopBar from '@/components/home/HomeTopBar.vue'
 import { useAuthStore } from '@/stores/auth'
+import { logger } from '@/utils/logger'
 
 const phoneNumber = ref('')
 const password = ref('')
@@ -20,12 +21,15 @@ async function handleSubmit() {
   isSubmitting.value = true
 
   try {
+    logger.log('login:submit', { phoneNumber: phoneNumber.value })
     await auth.login(phoneNumber.value.trim(), password.value)
 
     const redirect = (route.query.redirect as string) || '/profile'
+    logger.log('login:redirect', { redirect })
     router.push(redirect)
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Не удалось войти'
+    logger.error('login:error', { phoneNumber: phoneNumber.value, message })
     error.value = message
   } finally {
     isSubmitting.value = false

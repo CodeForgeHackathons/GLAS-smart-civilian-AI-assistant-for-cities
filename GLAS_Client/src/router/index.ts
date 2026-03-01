@@ -7,6 +7,7 @@ import ProfileView from '../views/ProfileView.vue'
 import LoginView from '../views/LoginView.vue'
 import HelpView from '../views/HelpView.vue'
 import { useAuthStore } from '../stores/auth'
+import { logger } from '../utils/logger'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -24,12 +25,16 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const auth = useAuthStore()
 
+  logger.log('router:navigate', { from: from.fullPath, to: to.fullPath, isAuthenticated: auth.isAuthenticated })
+
   if (to.name === 'profile' && !auth.isAuthenticated) {
+    logger.log('router:guard', { reason: 'unauthenticated-profile', redirectTo: '/login' })
     next({ name: 'login', query: { redirect: to.fullPath } })
     return
   }
 
   if (to.name === 'login' && auth.isAuthenticated) {
+    logger.log('router:guard', { reason: 'already-authenticated', redirectTo: '/profile' })
     next({ name: 'profile' })
     return
   }
